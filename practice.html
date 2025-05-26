@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS Practice - Process Scheduling</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">OS Process Scheduler</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="simulator.html" class="nav-link">Simulator</a>
+                <a href="theory.html" class="nav-link">Theory</a>
+                <a href="practice.html" class="nav-link active">Practice</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Quiz Section -->
+            <section class="quiz-section">
+                <h2>Process Scheduling Quiz</h2>
+                <p>Test your knowledge of process scheduling algorithms.</p>
+                <button onclick="startQuiz()" class="btn-quiz">Start Quiz</button>
+                <div id="quizContainer" style="display: none;"></div>
+            </section>
+
+            <!-- Practice Problems -->
+            <section class="practice-section">
+                <h2>Practice Problems</h2>
+                
+                <div class="practice-problem">
+                    <h3>1. Producer-Consumer Problem</h3>
+                    <div class="problem-details">
+                        <p class="difficulty">Difficulty: Medium</p>
+                        <p>Implement a solution to the producer-consumer problem using semaphores.</p>
+                        <button class="btn-toggle" onclick="toggleSolution('solution1')">Show Solution</button>
+                        <div id="solution1" class="solution" style="display: none;">
+                            <pre><code class="language-python">
+import threading
+import time
+import queue
+from threading import Semaphore
+
+# Shared buffer
+buffer = queue.Queue(maxsize=5)
+mutex = threading.Lock()
+empty = Semaphore(5)  # Initially buffer is empty
+full = Semaphore(0)   # Initially buffer has no items
+
+def producer():
+    while True:
+        item = produce_item()
+        empty.acquire()  # Wait if buffer is full
+        mutex.acquire()
+        buffer.put(item)
+        print(f"Produced: {item}")
+        mutex.release()
+        full.release()   # Signal consumer
+        time.sleep(1)
+
+def consumer():
+    while True:
+        full.acquire()   # Wait if buffer is empty
+        mutex.acquire()
+        item = buffer.get()
+        print(f"Consumed: {item}")
+        mutex.release()
+        empty.release()  # Signal producer
+        time.sleep(2)
+
+def produce_item():
+    return threading.current_thread().name + " item"
+
+# Create threads
+producer_thread = threading.Thread(target=producer)
+consumer_thread = threading.Thread(target=consumer)
+
+# Start threads
+producer_thread.start()
+consumer_thread.start()
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>2. Page Replacement Algorithm</h3>
+                    <div class="problem-details">
+                        <p class="difficulty">Difficulty: Hard</p>
+                        <p>Implement the Least Recently Used (LRU) page replacement algorithm.</p>
+                        <button class="btn-toggle" onclick="toggleSolution('solution2')">Show Solution</button>
+                        <div id="solution2" class="solution" style="display: none;">
+                            <pre><code class="language-python">
+class LRUCache:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.cache = {}
+        self.usage = []
+
+    def get(self, key):
+        if key in self.cache:
+            # Update usage
+            self.usage.remove(key)
+            self.usage.append(key)
+            return self.cache[key]
+        return -1
+
+    def put(self, key, value):
+        if key in self.cache:
+            self.usage.remove(key)
+        elif len(self.cache) >= self.capacity:
+            # Remove least recently used
+            lru_key = self.usage.pop(0)
+            del self.cache[lru_key]
+        
+        self.cache[key] = value
+        self.usage.append(key)
+
+# Example usage
+lru = LRUCache(3)
+lru.put(1, 1)    # cache is {1=1}
+lru.put(2, 2)    # cache is {1=1, 2=2}
+lru.put(3, 3)    # cache is {1=1, 2=2, 3=3}
+lru.put(4, 4)    # LRU key was 1, cache is {2=2, 3=3, 4=4}
+print(lru.get(1)) # returns -1 (not found)
+print(lru.get(3)) # returns 3
+print(lru.get(4)) # returns 4
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>3. Multilevel Queue Scheduling</h3>
+                    <div class="problem-details">
+                        <p class="difficulty">Difficulty: Hard</p>
+                        <p>Implement a multilevel queue scheduling algorithm with two queues: foreground (RR) and background (FCFS).</p>
+                        <button class="btn-toggle" onclick="toggleSolution('solution3')">Show Solution</button>
+                        <div id="solution3" class="solution" style="display: none;">
+                            <pre><code class="language-python">
+class Process:
+    def __init__(self, pid, arrival_time, burst_time, priority):
+        self.pid = pid
+        self.arrival_time = arrival_time
+        self.burst_time = burst_time
+        self.priority = priority
+        self.remaining_time = burst_time
+
+class MultilevelQueue:
+    def __init__(self, quantum):
+        self.foreground = []  # Interactive processes (RR)
+        self.background = []  # Batch processes (FCFS)
+        self.quantum = quantum
+        self.time = 0
+
+    def add_process(self, process, is_foreground):
+        if is_foreground:
+            self.foreground.append(process)
+        else:
+            self.background.append(process)
+
+    def schedule(self):
+        while self.foreground or self.background:
+            # First handle foreground processes (RR)
+            while self.foreground:
+                current = self.foreground.pop(0)
+                if current.remaining_time > self.quantum:
+                    self.time += self.quantum
+                    current.remaining_time -= self.quantum
+                    self.foreground.append(current)
+                    print(f"Time {self.time}: Running {current.pid} (Foreground)")
+                else:
+                    self.time += current.remaining_time
+                    current.remaining_time = 0
+                    print(f"Time {self.time}: Completed {current.pid} (Foreground)")
+
+            # Then handle background processes (FCFS)
+            if self.background:
+                current = self.background.pop(0)
+                self.time += current.remaining_time
+                current.remaining_time = 0
+                print(f"Time {self.time}: Completed {current.pid} (Background)")
+
+# Example usage
+scheduler = MultilevelQueue(quantum=4)
+
+# Add foreground processes
+scheduler.add_process(Process("P1", 0, 8, 1), True)
+scheduler.add_process(Process("P2", 1, 4, 1), True)
+
+# Add background processes
+scheduler.add_process(Process("P3", 2, 9, 2), False)
+scheduler.add_process(Process("P4", 3, 5, 2), False)
+
+# Run scheduling
+scheduler.schedule()
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            const button = solution.previousElementSibling;
+            if (solution.style.display === 'none') {
+                solution.style.display = 'block';
+                button.textContent = 'Hide Solution';
+            } else {
+                solution.style.display = 'none';
+                button.textContent = 'Show Solution';
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html> 

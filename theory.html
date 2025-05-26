@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS Theory - Process Scheduling</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .theory-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .theory-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .theory-nav {
+            position: sticky;
+            top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .theory-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .theory-nav li {
+            margin: 8px 0;
+        }
+
+        .theory-nav a {
+            color: #2c3e50;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .theory-nav a:hover {
+            color: #3498db;
+        }
+
+        .topic-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .subtopic {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .code-example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+
+        .important-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">OS Process Scheduler</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="simulator.html" class="nav-link">Simulator</a>
+                <a href="theory.html" class="nav-link active">Theory</a>
+                <a href="practice.html" class="nav-link">Practice</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <section class="theory-section">
+                <h2>Operating System Fundamentals</h2>
+                <div class="theory-content">
+                    <article class="algorithm-theory">
+                        <h3>What is an Operating System?</h3>
+                        <p>An operating system (OS) is system software that manages computer hardware, software resources, and provides common services for computer programs.</p>
+                        <div class="theory-details">
+                            <h4>Main Functions:</h4>
+                            <ul>
+                                <li>Process Management</li>
+                                <li>Memory Management</li>
+                                <li>File System Management</li>
+                                <li>I/O Management</li>
+                                <li>Security and Protection</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="algorithm-theory">
+                        <h3>Types of Operating Systems</h3>
+                        <div class="theory-details">
+                            <h4>1. Batch Operating System</h4>
+                            <ul>
+                                <li>Groups similar jobs into batches</li>
+                                <li>No direct interaction between user and computer</li>
+                                <li>Examples: Payroll Systems, Bank Statements</li>
+                            </ul>
+
+                            <h4>2. Multi-Programming Operating System</h4>
+                            <ul>
+                                <li>Multiple programs run simultaneously</li>
+                                <li>Improves CPU utilization</li>
+                                <li>Reduces idle time</li>
+                            </ul>
+
+                            <h4>3. Multi-Processing Operating System</h4>
+                            <ul>
+                                <li>Uses multiple processors</li>
+                                <li>Parallel processing</li>
+                                <li>Enhanced performance and reliability</li>
+                            </ul>
+
+                            <h4>4. Real-Time Operating System</h4>
+                            <ul>
+                                <li>Time-critical operations</li>
+                                <li>Guaranteed response times</li>
+                                <li>Used in robotics, medical systems</li>
+                            </ul>
+
+                            <h4>5. Time-Sharing Operating System</h4>
+                            <ul>
+                                <li>Multiple users share resources</li>
+                                <li>Interactive computing</li>
+                                <li>Example: Modern desktop OS</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="algorithm-theory">
+                        <h3>CPU Scheduling Algorithms</h3>
+                        <div class="theory-details">
+                            <h4>CPU Scheduling Criteria:</h4>
+                            <ul>
+                                <li>CPU Utilization</li>
+                                <li>Throughput</li>
+                                <li>Turnaround Time</li>
+                                <li>Waiting Time</li>
+                                <li>Response Time</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="algorithm-theory">
+                        <h3>Process Synchronization</h3>
+                        <div class="theory-details">
+                            <h4>Critical Section Problem</h4>
+                            <ul>
+                                <li>Mutual Exclusion</li>
+                                <li>Progress</li>
+                                <li>Bounded Waiting</li>
+                            </ul>
+
+                            <h4>Synchronization Tools</h4>
+                            <ul>
+                                <li>Mutex Locks</li>
+                                <li>Semaphores</li>
+                                <li>Monitors</li>
+                                <li>Condition Variables</li>
+                            </ul>
+
+                            <h4>Classical Problems</h4>
+                            <ul>
+                                <li>Producer-Consumer Problem</li>
+                                <li>Readers-Writers Problem</li>
+                                <li>Dining Philosophers Problem</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="algorithm-theory">
+                        <h3>Deadlock</h3>
+                        <div class="theory-details">
+                            <h4>Necessary Conditions</h4>
+                            <ul>
+                                <li>Mutual Exclusion</li>
+                                <li>Hold and Wait</li>
+                                <li>No Preemption</li>
+                                <li>Circular Wait</li>
+                            </ul>
+
+                            <h4>Deadlock Handling Methods</h4>
+                            <ul>
+                                <li>Prevention: Ensure at least one condition cannot occur</li>
+                                <li>Avoidance: Resource allocation state monitoring</li>
+                                <li>Detection: Allow deadlocks and detect them</li>
+                                <li>Recovery: Preempt resources or terminate processes</li>
+                            </ul>
+
+                            <h4>Deadlock Avoidance Algorithms</h4>
+                            <ul>
+                                <li>Banker's Algorithm</li>
+                                <li>Resource Allocation Graph</li>
+                                <li>Safe State Detection</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <section class="theory-section">
+                <h2>Process Scheduling Algorithms</h2>
+                <div class="theory-content">
+                    <article class="algorithm-theory">
+                        <h3>First Come First Serve (FCFS)</h3>
+                        <p>FCFS is the simplest scheduling algorithm. Processes are executed in the order they arrive in the ready queue.</p>
+                        <div class="theory-details">
+                            <h4>Characteristics:</h4>
+                            <ul>
+                                <li>Non-preemptive scheduling algorithm</li>
+                                <li>Easy to understand and implement</li>
+                                <li>Poor in performance as average wait time is high</li>
+                                <li>Suffers from convoy effect</li>
+                            </ul>
+                            <h4>Advantages:</h4>
+                            <ul>
+                                <li>Simple and easy to implement</li>
+                                <li>No starvation as every process gets chance to execute</li>
+                            </ul>
+                            <h4>Disadvantages:</h4>
+                            <ul>
+                                <li>High average waiting time</li>
+                                <li>Not suitable for interactive systems</li>
+                                <li>Convoy effect can occur</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="algorithm-theory">
+                        <h3>Shortest Job First (SJF)</h3>
+                        <p>SJF selects the process with the smallest burst time to execute next. It can be either preemptive or non-preemptive.</p>
+                        <div class="theory-details">
+                            <h4>Characteristics:</h4>
+                            <ul>
+                                <li>Optimal algorithm for minimizing average waiting time</li>
+                                <li>Can be preemptive or non-preemptive</li>
+                                <li>Requires prediction of burst time</li>
+                            </ul>
+                            <h4>Advantages:</h4>
+                            <ul>
+                                <li>Minimum average waiting time</li>
+                                <li>Good for batch systems</li>
+                            </ul>
+                            <h4>Disadvantages:</h4>
+                            <ul>
+                                <li>Starvation of longer processes</li>
+                                <li>Requires prediction of CPU burst time</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="algorithm-theory">
+                        <h3>Round Robin (RR)</h3>
+                        <p>Round Robin is a preemptive version of FCFS scheduling with a time quantum. Each process gets a fixed time slice for execution.</p>
+                        <div class="theory-details">
+                            <h4>Characteristics:</h4>
+                            <ul>
+                                <li>Preemptive scheduling algorithm</li>
+                                <li>Time quantum based execution</li>
+                                <li>Fair allocation of CPU</li>
+                            </ul>
+                            <h4>Advantages:</h4>
+                            <ul>
+                                <li>Fair CPU distribution</li>
+                                <li>No starvation</li>
+                                <li>Good for time-sharing systems</li>
+                            </ul>
+                            <h4>Disadvantages:</h4>
+                            <ul>
+                                <li>Higher average waiting time</li>
+                                <li>Performance depends on time quantum</li>
+                                <li>More context switches</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="algorithm-theory">
+                        <h3>Priority Scheduling</h3>
+                        <p>Priority scheduling assigns a priority to each process and the process with the highest priority is executed first.</p>
+                        <div class="theory-details">
+                            <h4>Characteristics:</h4>
+                            <ul>
+                                <li>Can be preemptive or non-preemptive</li>
+                                <li>Priority can be internal or external</li>
+                                <li>Suitable for real-time systems</li>
+                            </ul>
+                            <h4>Advantages:</h4>
+                            <ul>
+                                <li>Good for real-time systems</li>
+                                <li>Flexible priority assignment</li>
+                            </ul>
+                            <h4>Disadvantages:</h4>
+                            <ul>
+                                <li>Starvation of low priority processes</li>
+                                <li>Priority inversion problem</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="algorithm-theory">
+                        <h3>Shortest Remaining Time First (SRTF)</h3>
+                        <p>SRTF is the preemptive version of SJF. The process with the shortest remaining time is executed first.</p>
+                        <div class="theory-details">
+                            <h4>Characteristics:</h4>
+                            <ul>
+                                <li>Preemptive scheduling algorithm</li>
+                                <li>Optimal for minimizing average waiting time</li>
+                                <li>Requires continuous monitoring of remaining time</li>
+                            </ul>
+                            <h4>Advantages:</h4>
+                            <ul>
+                                <li>Minimum average waiting time</li>
+                                <li>Good for time-critical processes</li>
+                            </ul>
+                            <h4>Disadvantages:</h4>
+                            <ul>
+                                <li>Starvation of longer processes</li>
+                                <li>Overhead of continuous monitoring</li>
+                                <li>Difficult to implement in practice</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling for theory navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

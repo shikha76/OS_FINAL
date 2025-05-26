@@ -1,0 +1,505 @@
+/* Global Styles */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --danger-color: #e74c3c;
+    --warning-color: #f1c40f;
+    --dark-color: #2c3e50;
+    --light-color: #ecf0f1;
+    --border-color: #bdc3c7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: #f5f6fa;
+    color: var(--dark-color);
+}
+
+/* Navigation */
+.navbar {
+    background-color: var(--dark-color);
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.nav-logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+    background-color: var(--primary-color);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Main Content */
+.main-content {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+/* Sections */
+section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+h2 {
+    color: var(--dark-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+/* Algorithm Selection */
+.algorithm-section select {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+#quantumInput {
+    margin-top: 1rem;
+}
+
+#quantumInput input {
+    width: 100%;
+    max-width: 200px;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Input Section */
+.input-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.input-field {
+    flex: 1;
+    min-width: 200px;
+}
+
+.input-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+}
+
+.input-field input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Buttons */
+.btn-add, .btn-simulate, .btn-clear, .btn-remove {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-add {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-simulate {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-clear {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-remove {
+    background-color: var(--danger-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.btn-add:hover, .btn-simulate:hover, .btn-clear:hover, .btn-remove:hover {
+    opacity: 0.9;
+}
+
+/* Process Table */
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: var(--light-color);
+    font-weight: 500;
+}
+
+.table-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Results Section */
+.results-container {
+    background-color: var(--light-color);
+    padding: 1.5rem;
+    border-radius: 4px;
+}
+
+/* Gantt Chart */
+.gantt-wrapper {
+    position: relative;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+}
+
+.gantt-time-scale {
+    position: relative;
+    height: 30px;
+    margin-bottom: 1rem;
+}
+
+.time-marker {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: var(--dark-color);
+}
+
+.gantt-container {
+    position: relative;
+}
+
+.process-row {
+    display: flex;
+    margin-bottom: 0.5rem;
+    height: 40px;
+}
+
+.process-label {
+    width: 80px;
+    padding: 0.5rem;
+    background-color: var(--dark-color);
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    margin-right: 1rem;
+}
+
+.process-timeline {
+    position: relative;
+    flex-grow: 1;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.process-block {
+    position: absolute;
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.8rem;
+    transition: opacity 0.3s;
+}
+
+.process-block:hover {
+    opacity: 0.9;
+}
+
+.block-info {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.process-block:hover .block-info {
+    display: block;
+}
+
+.idle-block {
+    position: absolute;
+    height: 100%;
+    background-color: #f0f0f0;
+    opacity: 0.5;
+}
+
+/* Metrics Summary */
+.metrics-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.metric-card {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+/* Process Metrics Table */
+.process-metrics {
+    margin-top: 2rem;
+}
+
+.process-metrics h3 {
+    margin-bottom: 1rem;
+}
+
+#metricsTable {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#metricsTable th {
+    background-color: var(--dark-color);
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+    }
+
+    .input-field {
+        width: 100%;
+    }
+
+    .metrics-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .table-container {
+        margin: -1rem;
+    }
+}
+
+/* Quiz Styles */
+.quiz-question {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+.quiz-options {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.quiz-option {
+    padding: 1rem;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quiz-option:hover {
+    background: #e9ecef;
+}
+
+.quiz-option.answered {
+    cursor: default;
+}
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.quiz-score {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.final-score {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.btn-quiz {
+    background: #3498db;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-quiz:hover {
+    background: #2980b9;
+}
+
+/* Additional styles */
+.process-metrics {
+    margin: 20px 0;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.process-metrics h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3498db;
+}
+
+.metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.metrics-table th,
+.metrics-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #e1e1e1;
+    }
+
+.metrics-table th {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.metrics-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.metrics-table td {
+    color: #444;
+}
+
+/* Highlight important metrics */
+.metrics-table td:nth-child(7),  /* Turnaround Time */
+.metrics-table td:nth-child(8),  /* Response Time */
+.metrics-table td:nth-child(9)   /* Waiting Time */ {
+    font-weight: 500;
+    color: #2980b9;
+}
+
+/* Add responsive table support */
+@media screen and (max-width: 768px) {
+    .metrics-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+} 

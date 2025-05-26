@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS Process Scheduler - Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">OS Process Scheduler</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="simulator.html" class="nav-link active">Simulator</a>
+                <a href="theory.html" class="nav-link">Theory</a>
+                <a href="practice.html" class="nav-link">Practice</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Algorithm Selection -->
+            <section class="algorithm-section">
+                <h2>Select Algorithm</h2>
+                <select id="algorithmSelect">
+                    <option value="fcfs">First Come First Serve (FCFS)</option>
+                    <option value="sjf">Shortest Job First (SJF)</option>
+                    <option value="rr">Round Robin (RR)</option>
+                    <option value="priority">Priority Scheduling</option>
+                    <option value="srtf">Shortest Remaining Time First (SRTF)</option>
+                </select>
+                <div id="quantumInput" style="display: none;">
+                    <input type="number" id="timeQuantum" placeholder="Time Quantum" min="1" value="2">
+                </div>
+            </section>
+
+            <!-- Process Input Section -->
+            <section class="input-section">
+                <h2>Add Process</h2>
+                <form id="processForm">
+                    <div class="input-group">
+                        <div class="input-field">
+                            <label for="arrivalTime">Arrival Time</label>
+                            <input type="number" id="arrivalTime" required min="0">
+                        </div>
+                        <div class="input-field">
+                            <label for="burstTime">Burst Time</label>
+                            <input type="number" id="burstTime" required min="1">
+                        </div>
+                        <div class="input-field">
+                            <label for="priority">Priority</label>
+                            <input type="number" id="priority" value="0" min="0">
+                        </div>
+                        <button type="submit" class="btn-add">Add Process</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Process Table -->
+            <section class="process-table">
+                <h2>Process List</h2>
+                <div class="table-container">
+                    <table id="processTable">
+                        <thead>
+                            <tr>
+                                <th>Process ID</th>
+                                <th>Arrival Time</th>
+                                <th>Burst Time</th>
+                                <th>Priority</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="processTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="table-actions">
+                    <button onclick="runSimulation()" class="btn-simulate">Run Simulation</button>
+                    <button onclick="clearAllProcesses()" class="btn-clear">Clear All</button>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section">
+                <h2>Simulation Results</h2>
+                <div class="results-container">
+                    <div id="ganttChart"></div>
+                    
+                    <!-- Process Metrics Table -->
+                    <div class="process-metrics">
+                        <h3>Process Metrics</h3>
+                        <table id="metricsTable">
+                            <thead>
+                                <tr>
+                                    <th>Process ID</th>
+                                    <th>Arrival Time</th>
+                                    <th>Burst Time</th>
+                                    <th>Completion Time</th>
+                                    <th>Turnaround Time</th>
+                                    <th>Waiting Time</th>
+                                    <th>Response Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="metricsTableBody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="metrics-summary">
+                        <div class="metric-card">
+                            <span class="metric-label">Average Waiting Time</span>
+                            <span id="avgWaitingTime" class="metric-value">-</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Average Turnaround Time</span>
+                            <span id="avgTurnaroundTime" class="metric-value">-</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">Average Response Time</span>
+                            <span id="avgResponseTime" class="metric-value">-</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label">CPU Utilization</span>
+                            <span id="cpuUtilization" class="metric-value">-</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

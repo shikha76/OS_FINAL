@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS Learning Modules</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .modules-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 2rem;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+        
+        .module-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .module-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .module-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .module-button:hover {
+            background-color: #2980b9;
+        }
+
+        .welcome-header {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-header h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-header p {
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">OS Learning Platform</div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active">Home</a>
+                <a href="simulator.html" class="nav-link">Simulator</a>
+                <a href="theory.html" class="nav-link">Theory</a>
+                <a href="practice.html" class="nav-link">Practice</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="welcome-header">
+            <h1>Operating System Learning Modules</h1>
+            <p>Welcome to our interactive OS learning platform. Explore different modules to understand operating system concepts through simulation, theory, and practice.</p>
+        </div>
+
+        <div class="modules-container">
+            <div class="module-card">
+                <div class="module-icon">💻</div>
+                <h2 class="module-title">Process Scheduler</h2>
+                <p class="module-description">
+                    Experiment with different CPU scheduling algorithms through our interactive simulator. Visualize how processes are scheduled and analyze their performance metrics.
+                </p>
+                <a href="simulator.html" class="module-button">Open Simulator</a>
+                    </div>
+
+            <div class="module-card">
+                <div class="module-icon">📚</div>
+                <h2 class="module-title">Theory Guide</h2>
+                <p class="module-description">
+                    Learn about operating system concepts, including process scheduling algorithms, their characteristics, advantages, and disadvantages.
+                </p>
+                <a href="theory.html" class="module-button">Learn Theory</a>
+                </div>
+
+            <div class="module-card">
+                <div class="module-icon">⚡</div>
+                <h2 class="module-title">Practice & Quiz</h2>
+                <p class="module-description">
+                    Test your knowledge with interactive quizzes and solve practical programming problems related to operating system concepts.
+                </p>
+                <a href="practice.html" class="module-button">Start Practice</a>
+                </div>
+        </div>
+    </div>
+</body>
+</html> 
