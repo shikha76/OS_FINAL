@@ -164,16 +164,34 @@ function fcfs(processes) {
 
     return { timeline, processes: sortedProcesses };
 }
+
 function hrrn(processes) {
-    const n = processes.length;
+    // Validate and sanitize input
+    const sanitizedProcesses = processes.map((p, idx) => {
+        const arrivalTime = Number(p.arrivalTime);
+        const burstTime = Number(p.burstTime);
+        const priority = p.priority !== undefined ? Number(p.priority) : 0;
+
+        if (isNaN(arrivalTime) || isNaN(burstTime) || arrivalTime < 0 || burstTime <= 0) {
+            throw new Error(`Invalid process at index ${idx}: ${JSON.stringify(p)}`);
+        }
+
+        return {
+            id: p.id,
+            arrivalTime,
+            burstTime,
+            priority // not used in HRRN but kept for completeness
+        };
+    });
+
+    const n = sanitizedProcesses.length;
     const completed = new Array(n).fill(false);
     const schedule = [];
     let currentTime = 0;
     let completedCount = 0;
 
     while (completedCount < n) {
-        // Find all processes that have arrived and are not completed
-        const available = processes
+        const available = sanitizedProcesses
             .map((p, idx) => {
                 if (!completed[idx] && p.arrivalTime <= currentTime) {
                     const waitingTime = currentTime - p.arrivalTime;
@@ -185,17 +203,14 @@ function hrrn(processes) {
             .filter(x => x !== null);
 
         if (available.length === 0) {
-            // No process arrived yet, increment time
             currentTime++;
             continue;
         }
 
-        // Pick process with max response ratio
         available.sort((a, b) => b.responseRatio - a.responseRatio);
         const nextProcessIdx = available[0].idx;
-        const p = processes[nextProcessIdx];
+        const p = sanitizedProcesses[nextProcessIdx];
 
-        // Schedule process
         schedule.push({
             process: p,
             startTime: currentTime,
@@ -209,6 +224,7 @@ function hrrn(processes) {
 
     return schedule;
 }
+
 
 
 function sjf(processes) {
