@@ -447,6 +447,9 @@ function runSimulation() {
             case 'srtf':
                 result = srtf([...processes]);
                 break;
+            case 'hrrn':   // <-- ADD THIS CASE
+                result = hrrn([...processes]);
+                break;
             default:
                 alert('Please select a scheduling algorithm');
                 return;
