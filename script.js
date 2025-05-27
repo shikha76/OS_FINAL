@@ -666,7 +666,7 @@ function getRecommendation() {
     const recommendationDiv = document.getElementById('recommendationResult');
     
     if (processes.length === 0) {
-        recommendationDiv.innerHTML = "Add some processes to get AI recommendations.";
+        recommendationDiv.innerHTML = "Add some processes to get recommendations.";
         return;
     }
 
