@@ -80,12 +80,14 @@ function updateProcessTable() {
             <td>${process.burstTime}</td>
             <td>${process.priority}</td>
             <td>
+                <button onclick="editProcess(${index})" class="btn-edit">Edit</button>
                 <button onclick="removeProcess(${index})" class="btn-remove">Remove</button>
             </td>
         `;
         tableBody.appendChild(row);
     });
 }
+
 
 // Edit process
 function editProcess(index) {
