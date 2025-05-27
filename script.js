@@ -257,11 +257,9 @@ function priorityScheduling(processes) {
     const completed = [];
     const completedIds = new Set();
     let currentTime = 0;
-    let currentProcess = null;
 
     const processQueue = processes.map(p => ({
         ...p,
-        remainingTime: p.burstTime,
         startTime: null,
         finishTime: null,
         turnaroundTime: null,
@@ -280,51 +278,33 @@ function priorityScheduling(processes) {
             continue;
         }
 
-        // Pick highest priority available process
         const highest = available.reduce((max, p) =>
             p.priority > max.priority ? p : max
         );
 
-        // If a different process is selected or there's no process running
-        if (!currentProcess || currentProcess.id !== highest.id) {
-            if (currentProcess) {
-                timeline[timeline.length - 1].end = currentTime;
-            }
-
-            // Start new execution segment
-            timeline.push({
-                id: highest.id,
-                start: currentTime,
-                end: null // to be filled later
-            });
-
-            // Record first response time
-            if (highest.firstResponse === null) {
-                highest.firstResponse = currentTime;
-            }
-
-            currentProcess = highest;
+        highest.startTime = currentTime;
+        if (highest.firstResponse == null) {
+            highest.firstResponse = currentTime;
         }
 
-        // Run process for 1 time unit
-        currentProcess.remainingTime--;
-        currentTime++;
+        highest.finishTime = currentTime + highest.burstTime;
+        highest.turnaroundTime = highest.finishTime - highest.arrivalTime;
+        highest.waitingTime = highest.turnaroundTime - highest.burstTime;
+        highest.responseTime = highest.firstResponse - highest.arrivalTime;
 
-        // If process finishes
-        if (currentProcess.remainingTime === 0) {
-            currentProcess.finishTime = currentTime;
-            currentProcess.turnaroundTime = currentTime - currentProcess.arrivalTime;
-            currentProcess.waitingTime = currentProcess.turnaroundTime - currentProcess.burstTime;
-            currentProcess.responseTime = currentProcess.firstResponse - currentProcess.arrivalTime;
+        timeline.push({
+            id: highest.id,
+            start: currentTime,
+            end: highest.finishTime
+        });
 
-            timeline[timeline.length - 1].end = currentTime;
-            completed.push(currentProcess);
-            completedIds.add(currentProcess.id);
-            currentProcess = null;
-        }
+        currentTime = highest.finishTime;
+        completed.push(highest);
+        completedIds.add(highest.id);
     }
 
     return { timeline, processes: completed };
+} 
 }
 
 
