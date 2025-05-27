@@ -164,7 +164,7 @@ function fcfs(processes) {
 
     return { timeline, processes: sortedProcesses };
 }
-function hrrnScheduling(processes) {
+function hrrn(processes) {
     const n = processes.length;
     const completed = new Array(n).fill(false);
     const schedule = [];
