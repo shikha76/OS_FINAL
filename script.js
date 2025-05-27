@@ -185,9 +185,9 @@ function preemptivePriority(processes) {
             continue;
         }
 
-        // Get process with highest priority (higher number means higher priority)
-        currentProcess = available.reduce((max, p) => 
-            p.priority > max.priority ? p : max
+        // Get process with highest priority (lower number means higher priority)
+        currentProcess = available.reduce((min, p) => 
+            p.priority < min.priority ? p : min
         );
 
         // Record first response time if not set
@@ -342,8 +342,9 @@ function priorityScheduling(processes) {
             continue;
         }
 
-        const highest = available.reduce((max, p) =>
-            p.priority > max.priority ? p : max
+        // Get process with highest priority (lower number means higher priority)
+        const highest = available.reduce((min, p) =>
+            p.priority < min.priority ? p : min
         );
 
         highest.startTime = currentTime;
