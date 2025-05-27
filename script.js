@@ -1,6 +1,3 @@
-
-
-
 // Store processes
 let processes = [];
 let nextProcessId = 1;
@@ -91,7 +88,6 @@ function updateProcessTable() {
     });
 }
 
-
 // Edit process
 function editProcess(index) {
     const process = processes[index];
@@ -168,7 +164,75 @@ function fcfs(processes) {
     return { timeline, processes: sortedProcesses };
 }
 
+function preemptivePriority(processes) {
+    const timeline = [];
+    const completed = [];
+    let currentTime = 0;
+    const processQueue = processes.map(p => ({ ...p }));
+    let currentProcess = null;
+    let lastProcessId = null;
+    let lastStartTime = 0;
 
+    while (completed.length < processes.length) {
+        // Get all available processes at current time
+        const available = processQueue.filter(p => 
+            p.arrivalTime <= currentTime && 
+            p.remainingTime > 0
+        );
+
+        if (available.length === 0) {
+            currentTime++;
+            continue;
+        }
+
+        // Get process with highest priority (higher number means higher priority)
+        currentProcess = available.reduce((max, p) => 
+            p.priority > max.priority ? p : max
+        );
+
+        // Record first response time if not set
+        if (currentProcess.firstResponse === null) {
+            currentProcess.firstResponse = currentTime;
+        }
+
+        // If we switched to a different process, record the timeline entry
+        if (currentProcess.id !== lastProcessId) {
+            if (lastProcessId !== null) {
+                timeline.push({
+                    id: lastProcessId,
+                    start: lastStartTime,
+                    end: currentTime
+                });
+            }
+            lastProcessId = currentProcess.id;
+            lastStartTime = currentTime;
+        }
+
+        // Execute one time unit
+        currentProcess.remainingTime--;
+        
+        // If process completes
+        if (currentProcess.remainingTime === 0) {
+            currentProcess.finishTime = currentTime + 1;
+            currentProcess.turnaroundTime = currentProcess.finishTime - currentProcess.arrivalTime;
+            currentProcess.waitingTime = currentProcess.turnaroundTime - currentProcess.burstTime;
+            currentProcess.responseTime = currentProcess.firstResponse - currentProcess.arrivalTime;
+            
+            timeline.push({
+                id: currentProcess.id,
+                start: lastStartTime,
+                end: currentTime + 1
+            });
+            
+            completed.push(currentProcess);
+            lastProcessId = null;
+        }
+
+        currentTime++;
+    }
+
+    return { timeline, processes: completed };
+}
 
 function sjf(processes) {
     const timeline = [];
@@ -306,8 +370,6 @@ function priorityScheduling(processes) {
     return { timeline, processes: completed };
 } 
 
-
-
 function srtf(processes) {
     const timeline = [];
     const completed = [];
@@ -403,6 +465,9 @@ function runSimulation() {
                 break;
             case 'priority':
                 result = priorityScheduling([...processes]);
+                break;
+            case 'preemptive-priority':
+                result = preemptivePriority([...processes]);
                 break;
             case 'srtf':
                 result = srtf([...processes]);
