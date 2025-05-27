@@ -248,13 +248,22 @@ function roundRobin(processes, quantum) {
 function priorityScheduling(processes) {
     const timeline = [];
     const completed = [];
+    const completedIds = new Set();
     let currentTime = 0;
-    const processQueue = processes.map(p => ({ ...p }));
+
+    const processQueue = processes.map(p => ({
+        ...p,
+        startTime: null,
+        finishTime: null,
+        turnaroundTime: null,
+        waitingTime: null,
+        responseTime: null,
+        firstResponse: null
+    }));
 
     while (completed.length < processes.length) {
-        const available = processQueue.filter(p => 
-            p.arrivalTime <= currentTime && 
-            !completed.includes(p)
+        const available = processQueue.filter(p =>
+            p.arrivalTime <= currentTime && !completedIds.has(p.id)
         );
 
         if (available.length === 0) {
@@ -262,12 +271,12 @@ function priorityScheduling(processes) {
             continue;
         }
 
-        const highest = available.reduce((max, p) => 
+        const highest = available.reduce((max, p) =>
             p.priority > max.priority ? p : max
         );
 
         highest.startTime = currentTime;
-        if (highest.firstResponse === null) {
+        if (highest.firstResponse == null) {
             highest.firstResponse = currentTime;
         }
 
@@ -284,10 +293,12 @@ function priorityScheduling(processes) {
 
         currentTime = highest.finishTime;
         completed.push(highest);
+        completedIds.add(highest.id);
     }
 
     return { timeline, processes: completed };
 }
+
 
 function srtf(processes) {
     const timeline = [];
