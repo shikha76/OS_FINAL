@@ -305,7 +305,7 @@ function priorityScheduling(processes) {
 
     return { timeline, processes: completed };
 } 
-}
+
 
 
 function srtf(processes) {
