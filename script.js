@@ -164,6 +164,52 @@ function fcfs(processes) {
 
     return { timeline, processes: sortedProcesses };
 }
+function hrrnScheduling(processes) {
+    const n = processes.length;
+    const completed = new Array(n).fill(false);
+    const schedule = [];
+    let currentTime = 0;
+    let completedCount = 0;
+
+    while (completedCount < n) {
+        // Find all processes that have arrived and are not completed
+        const available = processes
+            .map((p, idx) => {
+                if (!completed[idx] && p.arrivalTime <= currentTime) {
+                    const waitingTime = currentTime - p.arrivalTime;
+                    const responseRatio = (waitingTime + p.burstTime) / p.burstTime;
+                    return { idx, responseRatio };
+                }
+                return null;
+            })
+            .filter(x => x !== null);
+
+        if (available.length === 0) {
+            // No process arrived yet, increment time
+            currentTime++;
+            continue;
+        }
+
+        // Pick process with max response ratio
+        available.sort((a, b) => b.responseRatio - a.responseRatio);
+        const nextProcessIdx = available[0].idx;
+        const p = processes[nextProcessIdx];
+
+        // Schedule process
+        schedule.push({
+            process: p,
+            startTime: currentTime,
+            runTime: p.burstTime
+        });
+
+        currentTime += p.burstTime;
+        completed[nextProcessIdx] = true;
+        completedCount++;
+    }
+
+    return schedule;
+}
+
 
 function sjf(processes) {
     const timeline = [];
