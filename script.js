@@ -166,21 +166,23 @@ function fcfs(processes) {
 }
 
 function hrrn(processes) {
-    // Validate and sanitize input
     const sanitizedProcesses = processes.map((p, idx) => {
         const arrivalTime = Number(p.arrivalTime);
         const burstTime = Number(p.burstTime);
         const priority = p.priority !== undefined ? Number(p.priority) : 0;
 
-        if (isNaN(arrivalTime) || isNaN(burstTime) || arrivalTime < 0 || burstTime <= 0) {
-            throw new Error(`Invalid process at index ${idx}: ${JSON.stringify(p)}`);
+        if (isNaN(arrivalTime) || isNaN(burstTime)) {
+            throw new Error(`Process ${p.id || idx} has invalid arrival or burst time.`);
+        }
+        if (arrivalTime < 0 || burstTime <= 0) {
+            throw new Error(`Process ${p.id || idx} has negative/zero burst time or negative arrival time.`);
         }
 
         return {
             id: p.id,
             arrivalTime,
             burstTime,
-            priority // not used in HRRN but kept for completeness
+            priority
         };
     });
 
@@ -200,7 +202,7 @@ function hrrn(processes) {
                 }
                 return null;
             })
-            .filter(x => x !== null);
+            .filter(Boolean);
 
         if (available.length === 0) {
             currentTime++;
@@ -208,8 +210,8 @@ function hrrn(processes) {
         }
 
         available.sort((a, b) => b.responseRatio - a.responseRatio);
-        const nextProcessIdx = available[0].idx;
-        const p = sanitizedProcesses[nextProcessIdx];
+        const nextIdx = available[0].idx;
+        const p = sanitizedProcesses[nextIdx];
 
         schedule.push({
             process: p,
@@ -218,13 +220,12 @@ function hrrn(processes) {
         });
 
         currentTime += p.burstTime;
-        completed[nextProcessIdx] = true;
+        completed[nextIdx] = true;
         completedCount++;
     }
 
     return schedule;
 }
-
 
 
 function sjf(processes) {
