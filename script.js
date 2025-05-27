@@ -165,67 +165,6 @@ function fcfs(processes) {
     return { timeline, processes: sortedProcesses };
 }
 
-function hrrn(processes) {
-    const sanitizedProcesses = processes.map((p, idx) => {
-        const arrivalTime = Number(p.arrivalTime);
-        const burstTime = Number(p.burstTime);
-        const priority = p.priority !== undefined ? Number(p.priority) : 0;
-
-        if (isNaN(arrivalTime) || isNaN(burstTime)) {
-            throw new Error(`Process ${p.id || idx} has invalid arrival or burst time.`);
-        }
-        if (arrivalTime < 0 || burstTime <= 0) {
-            throw new Error(`Process ${p.id || idx} has negative/zero burst time or negative arrival time.`);
-        }
-
-        return {
-            id: p.id,
-            arrivalTime,
-            burstTime,
-            priority
-        };
-    });
-
-    const n = sanitizedProcesses.length;
-    const completed = new Array(n).fill(false);
-    const schedule = [];
-    let currentTime = 0;
-    let completedCount = 0;
-
-    while (completedCount < n) {
-        const available = sanitizedProcesses
-            .map((p, idx) => {
-                if (!completed[idx] && p.arrivalTime <= currentTime) {
-                    const waitingTime = currentTime - p.arrivalTime;
-                    const responseRatio = (waitingTime + p.burstTime) / p.burstTime;
-                    return { idx, responseRatio };
-                }
-                return null;
-            })
-            .filter(Boolean);
-
-        if (available.length === 0) {
-            currentTime++;
-            continue;
-        }
-
-        available.sort((a, b) => b.responseRatio - a.responseRatio);
-        const nextIdx = available[0].idx;
-        const p = sanitizedProcesses[nextIdx];
-
-        schedule.push({
-            process: p,
-            startTime: currentTime,
-            runTime: p.burstTime
-        });
-
-        currentTime += p.burstTime;
-        completed[nextIdx] = true;
-        completedCount++;
-    }
-
-    return schedule;
-}
 
 
 function sjf(processes) {
@@ -463,9 +402,6 @@ function runSimulation() {
                 break;
             case 'srtf':
                 result = srtf([...processes]);
-                break;
-            case 'hrrn':   // <-- ADD THIS CASE
-                result = hrrn([...processes]);
                 break;
             default:
                 alert('Please select a scheduling algorithm');
