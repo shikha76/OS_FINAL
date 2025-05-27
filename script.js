@@ -80,7 +80,7 @@ function updateProcessTable() {
             <td>${process.burstTime}</td>
             <td>${process.priority}</td>
             <td>
-                <button onclick="editProcess(${index})" class="btn-edit">Edit</button>
+                <button onclick="editProcess(${index})" class="btn-remove">Edit</button>
                 <button onclick="removeProcess(${index})" class="btn-remove">Remove</button>
             </td>
         `;
