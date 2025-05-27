@@ -523,6 +523,25 @@ function displayResults(result) {
     const busyTime = result.timeline.reduce((sum, t) => sum + (t.end - t.start), 0);
     const cpuUtilization = ((busyTime / totalTime) * 100).toFixed(1);
     document.getElementById('cpuUtilization').textContent = `${cpuUtilization}%`;
+     // Calculate Context Switches
+    // A context switch occurs when we switch from one process to another
+    // We can count this by looking at consecutive entries in the timeline
+    let contextSwitches = 0;
+    for (let i = 1; i < result.timeline.length; i++) {
+        if (result.timeline[i].id !== result.timeline[i-1].id) {
+            contextSwitches++;
+        }
+    }
+
+    // Add context switches to metrics summary
+    const metricsSummary = document.querySelector('.metrics-summary');
+    const contextSwitchCard = document.createElement('div');
+    contextSwitchCard.className = 'metric-card';
+    contextSwitchCard.innerHTML = `
+        <span class="metric-label">Context Switches</span>
+        <span class="metric-value">${contextSwitches}</span>
+    `;
+    metricsSummary.appendChild(contextSwitchCard);
 }
 
 // Create Gantt chart
